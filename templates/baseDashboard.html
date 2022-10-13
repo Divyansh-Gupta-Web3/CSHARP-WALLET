@@ -1,0 +1,423 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0" />
+    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/x-icon">
+    <script type="application/javascript" src="../static/js/mpayz.min.js"></script>
+    <script type="application/javascript" src="../static/js/script.min.js"></script>
+    <script type="application/javascript" src="../static/js/sweetalert.min.js"></script>
+    <script type="application/javascript" src="../static/alertifyjs/alertify.min.js"></script>
+    <link rel="stylesheet" href="../static/alertifyjs/css/alertify.min.css" />
+    <link rel="stylesheet" href="../static/css/default.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static '../static/css/bootstrap.css'%}" />
+    <script type="application/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/0aebd96d17.js" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="../static/css/main.min.css">
+    <title>{% block title %}{% endblock title %}</title>
+    <style>
+        {% block style %}
+        {% endblock style %}
+    </style>
+</head>
+<noscript>
+    <meta http-equiv="refresh" content="0; url=/dashboard" />
+    <style>
+        .body-content {
+            display: none;
+        }
+    </style>
+    <div class="align-items-center justify-content-center text-center">
+        <h1 class="text-dark">Please enable your browser's javascript to continue.</h1>
+    </div>
+</noscript>
+
+<body style="overflow-y:auto;">
+    <div class="body-content">
+        <a href="#" onclick=" navbar()" class="mobile-icon">
+            <span class="icon-huburger"></span>
+        </a>
+        <div class="left-side main-navbar">
+            <div class="col rounded-3 float-start navbar-container">
+                <div class="text-center">
+                    <img class="col main-logo" src="../static/images/adminpanellogo.png" alt="">
+                </div>
+                <div class=" balance col text-center">
+                    <div class="h6">Account Balance</div>
+                    <div class="h2">${{inUSD}}</div>
+                </div>
+                <div class="menu">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="/dashboard">
+                                <img style="padding-left:5px; padding-bottom: 7px;padding-top: 8.5px;padding-right: 5px; height: 0.8cm; border-radius: 120%;"
+                                    src="../static/images/icon/icon-nav.-dashboard.png" alt="" />
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/vault">
+                                <img style="padding-left:5px;padding-right: 5px; height: 0.8cm; border-radius: 120%;"
+                                    src="../static/images/icon/icon-collection.png" alt="">
+                                My Healthcare Vault
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/send">
+                                <img class="navbar-send" style="height: 0.8cm; "
+                                    src="../static/images/icon/icon-nav-send.png" alt="">
+                                Send CSharp
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/request">
+                                <img class="navbar-request" style="height: 0.8cm; "
+                                    src="../static/images/icon/icon-nav-recieve.png" alt="">
+                                Request CSharp
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/history">
+                                <img class="navbar-history" style="height: 0.8cm;"
+                                    src="../static/images/icon/icon-nav-history.png" alt="">
+                                Txn History
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/settings">
+                                <img style="height: 0.8cm; " src="../static/images/icon/icon-nav-settings.png" alt="">
+                                Settings
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="{% url 'support'%}">
+                                <img style="height: 0.8cm; " src="../static/images/icon/icon-support.png" alt="">
+                                Support
+                            </a>
+                        </li>
+
+                        <li class="list-group-item last-li">
+                            <a href="/faqs">
+                                <img style="padding-top:7px;padding-left:8px;padding-right:8px; height: 0.8cm; "
+                                    src="../static/images/icon/icon-faq.png" alt="">
+                                FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-7 main-heading">
+                        {% block heading %}{% endblock heading %}
+                    </div>
+
+                    {% comment %} <div class="col-sm-4 middle">
+                        {% block toggle %}
+                        <div class="toggle-bar ">
+                            <div class="btn-group " role="group">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <button name="testnet" id="testnet" onclick=" netToggle()" type="button"
+                                        class="btn testnet">Testnet</button>
+                                </form>
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <button name="mainnet" id="mainnet" onclick=" netToggle()" type="button"
+                                        class="btn mainnet">Mainnet</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endblock toggle %}
+                    </div> {% endcomment %}
+                    <div class=" col-sm-5 d-flex justify-content-end">
+                        {% if role == "admin" %}
+                        <a href="/admin">
+                            <img class="notification-icons" src="../static/images/icon/admin.png" alt="">
+                        </a>
+                        {% endif %}
+                        <a onclick=" darkMode()">
+                            <img id="dark-toggle" class="notification-icons" src="../static/images/icon/brightness.png"
+                                alt="">
+                        </a>
+                        <div class="notification d-flex">
+                            <div class="dropdown">
+                                <a onclick=" dropdown(this)" class="dropdown-toggle" type="button" id="message"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {%if count_msg != 0 %}
+                                    <span class="badge notification-count">{{count_msg}}</span>
+                                    {% endif %}
+                                    <img class="notification-icons " src="../static/images/icon/icon-chat.png" alt="">
+                                </a>
+                                <div id="dropdown-menu-chat" class="dropdown-menu dropdown-menu-chat"
+                                    aria-labelledby="dropdownMenuButton">
+                                    {% if filtered_msg %}
+                                    {% for i in filtered_msg %}
+                                    <div class="col-sm-12 chat-user my-1  py-1 pb-2  ">
+                                        <a style="position: relative; width: 100%;" class="mx-1 d-flex chat-link"
+                                            href="{% url 'inbox'%}?favid={{i.user.Address}}">
+                                            <div class="user-chat-data d-flex border-bottom">
+
+                                                {% if i.user.profile_pic%}
+                                                <img src="/{{i.user.profile_pic}}" alt="Placeholder image">
+                                                {% else %}
+                                                <img height="25" width="25" src="../static/images/adminpanellogo.png"
+                                                    alt="Placeholder image">
+                                                {% endif %}
+                                                <div class="">
+                                                    <div class="chat-user-name">{{ i.user}}</div>
+                                                    <div class="last-msg">{{i.last_message.body}}</div>
+                                                </div>
+                                                {% if i.unread != 0 %}
+                                                <p class="msg-count">{{ i.unread }}</p>
+                                                {% endif %}
+                                            </div>
+
+                                            {% now "Y-m-d" as todays_date %}
+                                            {% if todays_date == i.last|date:"Y-m-d" %}
+                                            {% if i.last|date:"A" == "AM" %}
+                                            <span class="date-time">Today, {{i.last|date:"h:i"}}a</span>
+                                            {% else %}
+                                            <span class="date-time">Today, {{i.last|date:"h:i"}}p</span>
+                                            {% endif %}
+                                            {% elif  addDays|date:"Y-m-d" ==  i.last|date:"Y-m-d" %}
+                                            {% if i.last|date:"A" == "AM" %}
+                                            <span class="date-time">Yesterday, {{i.last|date:"h:i"}}a</span>
+                                            {% else %}
+                                            <span class="date-time">Yesterday, {{i.last|date:"h:i"}}p</span>
+                                            {% endif %}
+                                            {% else %}
+                                            {% if i.last|date:"A" == "AM" %}
+                                            <span class="date-time">{{i.last|date:"M d, Y,  h:i"}}a</span>
+                                            {% else %}
+                                            <span class="date-time">{{i.last|date:"M d, Y,  h:i"}}p</span>
+                                            {% endif %}
+                                            {% endif %}
+                                        </a>
+                                    </div>
+
+                                    {% endfor %}
+                                    {% else %}
+                                    <div class="text-center">
+                                        <span class="">No new messages</span>
+                                    </div>
+                                    {% endif %}
+                                    <a class="text-white" onclick=" inbox()">
+                                        <div class="all-notifications text-center mt-3">View all</div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+
+                                <a onclick=" dropdown(this)" class="dropdown-toggle" type="button" id="notification"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {%if count_request != 0 %}
+                                    <span id="count-notification" class="badge notification-count"></span>
+                                    {% endif %}
+                                    <img class="notification-icons "
+                                        src="../static/images/all bg/icon-notifications.png" alt="" />
+                                </a>
+                                <div id="dropdown-menu-notification" class="dropdown-menu dropdown-menu-notification"
+                                    aria-labelledby="dropdownMenuButton">
+
+                                    {% for i in trxn_data %}
+
+                                    {% if i.tnxtype == "Sent" %}
+                                    <a name="{{i.time|date:"M d, Y,  H:i"}}" onclick="  txnDetails(this)" id="{{i.id}}"
+                                        class="dropdown-item border-bottom sent">
+                                        <img height="20" width="20" src="../static/images/icon/icon-txn-sent.png"
+                                            alt="" />
+                                        {{i.tnxtype}} {{i.amount}} CSharp successfully <br>
+                                        {% now "Y-m-d" as todays_date %}
+                                        {% if todays_date == i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% else %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}p</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    {% elif i.tnxtype == "Received" %}
+                                    <a name="{{i.time|date:"M d, Y,  H:i"}}" onclick=" txnDetails(this)" id="{{i.id}}"
+                                        class="dropdown-item border-bottom received">
+                                        <img height="20" width="20" src="../static/images/icon/icon-txn-received.png"
+                                            alt="">
+                                        {{i.tnxtype}} {{i.amount}} CSharp successfully <br>
+                                        {% now "Y-m-d" as todays_date %}
+                                        {% if todays_date == i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% else %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}p</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    {% elif i.tnxtype == "Received Algo" %}
+                                    <a onclick=" txnDetails(this)" id="{{i.id}}"
+                                        class="dropdown-item border-bottom received">
+                                        <img height="20" width="20" src="../static/images/icon/icon-txn-received.png"
+                                            alt="">
+                                        Received {{i.amount}} Algo successfully <br>
+                                        {% now "Y-m-d" as todays_date %}
+                                        {% if todays_date == i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% else %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}p</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    {% elif i.tnxtype == "NFT" %}
+                                    <a onclick=" txnDetails(this)" id="{{i.id}}"
+                                        class="dropdown-item border-bottom nft">
+                                        <img height="20" width="20" src="../static/images/icon/icon-success.png" alt="">
+                                        Asset added successfully <br>
+                                        {% now "Y-m-d" as todays_date %}
+                                        {% if todays_date == i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Today, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Yesterday, {{i.time|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% else %}
+                                        {% if i.time|date:"A" == "AM" %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">{{i.time|date:"M d, Y,  h:i"}}p</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    {% else %}
+                                    <a class="dropdown-item border-bottom request" href="/request">
+                                        <div>
+                                            <img height="20" width="20" src="../static/images/icon/icon-request.png"
+                                                alt="" />
+                                            {{i.sender_username}} requested you for {{i.token}} CSharp
+                                        </div>
+                                        {% now "Y-m-d" as todays_date %}
+                                        {% if todays_date == i.date|date:"Y-m-d" %}
+                                        {% if i.date|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{i.date|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Today, {{i.date|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% elif  addDays|date:"Y-m-d" ==  i.date|date:"Y-m-d" %}
+                                        {% if i.date|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{i.date|date:"h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">Yesterday, {{i.date|date:"h:i"}}p</span>
+                                        {% endif %}
+                                        {% else %}
+                                        {% if i.date|date:"A" == "AM" %}
+                                        <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}a</span>
+                                        {% else %}
+                                        <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}p</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    {% endif %}
+
+                                    {% endfor %}
+
+                                    <a onclick="storeDate()" class="text-white" href="/notifications">
+                                        <div class="all-notifications text-center mt-3">View all</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-info  ">
+                            <a href="/settings"> <span id="user-name" class="username">{{user.username}}</span> </a>
+                            {% if user.profile_pic %}
+                            <img onclick=" settings()" src="/{{user.profile_pic}}" alt="">
+                            {% else %}
+                            <img onclick=" settings()" src="../static/images/adminpanellogo.png" alt="">
+                            {% endif %}
+
+                        </div>
+                        <a class="logout-link float-end" onclick=" logout()">
+                            <i class="icon-user-logout">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-3 content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+
+        <footer class="fixed-bottom text-light text-center text-lg-start">
+            <div class="bg-dark text-center p-1">© 2022 CSharp</div>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% load static %}
+{% block title %}CSharp Wallet{%endblock title %}
+{% block main %}
+
+
+
+<div class="col">
+  <!-- main heading -->
+  <div class="row">
+    <div class="main-heading">Welcome to CSharp</div>
+  </div>
+
+  <!-- company logo -->
+  <div class="row-sm text-center">
+    <img class="main-logo" src="../static/images/adminpanellogo.png" alt="" />
+  </div>
+
+  <!-- subheading -->
+  <div class="row-sm">
+    <div class="option-text">Select Option Below</div>
+  </div>
+
+  <!-- separation line -->
+  <div class="v-line"></div>
+
+  <!-- create new account  -->
+  <div class="new-user landing-page-opt d-flex">
+    <div class="left-side float-start">
+      <img class="rounded-3" src="../static/images/icon/rec-wallet-icon.png" alt="" />
+    </div>
+    <div class="right-side d-flex">
+      <a class="text-decor-none" onclick="getPass()">
+        <div class="heading-small ">
+          New User? Sign Up Here.
+        </div>
+        <label class="text-secondary link-label mb-4">Create an account and get <br/>
+          a new Passphrase.</label>
+      </a>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <!-- reutrning user -->
+  <div class=" returning-user landing-page-opt d-flex">
+    <div class="left-side float-start ">
+      <img class="rounded-3" src="../static/images/icon/rec-key-icon.png" alt="" />
+    </div>
+    <div class="right-side d-flex">
+      <a class="returning-user" href="/login">
+        <div class="heading-small mt-3">Returning User? Login Here.</div>
+        <label class="text-secondary link-label create-acc-label">Log In to your account using your password or Recover your account
+          with your Passphrase.</label>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock main %}
+
+{% block style %}
+.link-label{
+  width:249px;
+  margin-left:10px;
+}
+.create-acc-heading{
+  margin-left: -34px;
+}
+.swal-button--confirm{ 
+  background-color:rgb(79,79,164);
+}
+.swal-content{
+  font-size: 19px; 
+}
+.landing-page-opt{
+  margin-top: 60px auto !important;
+}
+.returning-user{
+margin-top:-15px;
+}
+.main-container {
+  height: 430px;
+}
+{% endblock style %}

@@ -1,0 +1,36 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}FAQs{% endblock title %}
+{% block heading %}FAQs{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block style %}
+{% endblock style %}
+{% block content %}
+{% for i in data %}
+  <button type="button" class="collapsible-btn">• {{i.Questions}}</button>
+  <div class="btn-content">
+    <p>{{i.Answer}}</p>
+  </div>
+{% endfor %}
+<script>
+    var coll = $(".collapsible-btn");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+          this.style.borderRadius = "10px";
+          this.style.marginBottom = "10px";
+         
+        } else {
+          content.style.display = "block";
+          this.style.borderRadius = "10px 10px 0 0";
+          content.style.borderRadius = "0 0 10px 10px";
+          this.style.marginBottom = "0";
+
+        }
+      });
+    }
+  </script>
+{% endblock content %}

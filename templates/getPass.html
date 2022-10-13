@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Save your Passphrase{% endblock title %}
+
+{% block main %}
+<script>
+  alertify.set('notifier', 'position', 'top-right');
+  alertify.set('notifier', 'delay', 7);
+  alertify.notify('Save passphrase. Account recovery will require all passphrase words.');
+  
+  function copyPassphrase() {
+    var address = [];
+      for (let i = 1; i <= 25; i++) {
+          address[i] = $("#word" + i).val() + " ";
+      }
+      navigator.clipboard.writeText(address.join(""));
+      alertify.set("notifier", "position", "top-right");
+      alertify.set("notifier", "delay", 2);
+      alertify.notify("Passphrase Copied");
+  }
+</script>
+
+<div class="col">
+  <!-- main heading -->
+  <div class="row">
+    <div class="main-heading">Your Passphrase</div>
+  </div>
+  <!-- company logo -->
+  <div class="row-sm text-center">
+    <img class="main-logo" src="../static/images/icon/key-icon-big.png" alt="">
+  </div>
+  <!-- spacebar -->
+  <div class="v-line mb-3"></div>
+    <!-- passphrase rows -->
+    <div class="phrase-buttons">
+      <form method="post">
+        {% csrf_token %}
+        {% for i,x in Words1.items%}
+          <input class="mb-0 mx-2  text-center verifyBtn" disabled class="word" id={{i}} type="text" name={{i}}
+          value={{x}}></input>
+        {% endfor %}<br/>
+        {% for i,x in Words2.items%}
+          <input class="mb-0 mx-2 text-center verifyBtn" disabled id={{i}} type="text" name={{i}} value={{x}}></input>
+        {% endfor %}<br/>
+        {% for i,x in Words3.items%}
+          <input class="mb-0 mx-2 text-center verifyBtn" disabled id={{i}} type="text" name={{i}} value={{x}}></input>
+        {% endfor %}<br/>
+        {% for i,x in Words4.items%}
+          <input class="mb-0 mx-2 text-center verifyBtn" disabled id={{i}} type="text" name={{i}} value={{x}}></input>
+        {% endfor %}<br/>
+        {% for i,x in Words5.items%}
+          <input class="mb-0 mx-2 text-center verifyBtn" disabled id={{i}} type="text" name={{i}} value={{x}}></input>
+        {% endfor %}<br/>
+    </form>
+  </div>
+
+  <div class="row">
+    <button class="col-5 btn btn-primary btn-lg big-btn violet-btn float-start mt-2" onclick="copyPassphrase()">Copy to Clipboard</button>
+    <button class="col-5 btn btn-primary btn-lg big-btn transparent-btn float-end mt-2"
+      onclick="location.href='{% url 'get_pass'%}'">Regenerate</button>
+    <button onclick="location.href='{% url 'verify'%}'" class="col-5 btn btn-primary btn-lg big-btn green-btn  mt-2"
+      type="submit">Next</button>
+  </div>
+</div>
+{% endblock main %}
+{% block style %}
+.main-container{
+  width:max-content !important;
+  height:620px;
+}
+.main-heading{
+  font-size:35px;
+}
+{% endblock style %}

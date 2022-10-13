@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recover your Account{% endblock title %}
+
+{% block style %}
+.main-container{
+  width:max-content !important;
+  height:620px;
+}
+.main-heading{
+font-size:35px;
+}
+.swal-button--confirm{
+  background-color:rgb(79,79,164);
+}
+.swal-content{
+  font-size: 0.5cm;
+}
+{% endblock style %}
+
+{% block main %}
+<script>
+  {% for msg in messages  %}
+    alertify.set('notifier','position', 'top-left');
+    alertify.{{msg.tags}}('{{msg}}');
+  {% endfor %}
+</script>
+
+<div class="col">
+  <!-- main heading -->
+  <div class="row">
+      <div class="main-heading">Enter Your Passphrase</div>
+  </div>
+  <!-- company logo -->
+  <div class="row-sm text-center">
+      <img class="main-logo" src="../static/images/icon/key-icon-big.png" alt="">
+  </div>
+  <!-- spacebar -->
+  <div class="v-line mb-3"></div>
+	<div class="recover-fields">
+		<form action="" method="post">
+			{% csrf_token %}
+			
+			{% for i,x in Words1.items%}
+				<input class="mb-1 mx-2   verifyBtn"   id={{i}} type="text" name={{i}} placeholder="Word {{x}}"></input>
+			{% endfor %}
+			<br/>
+			{% for i,x in Words2.items%}
+				<input class="mb-1 mx-2   verifyBtn"  id={{i}} type="text" name={{i}} placeholder="Word {{x}}"></input>
+			{% endfor %} 
+			<br/>
+			{% for i,x in Words3.items%}
+				<input class="mb-1 mx-2   verifyBtn"   id={{i}} type="text" name={{i}} placeholder="Word {{x}}"></input>
+			{% endfor %} 
+			<br/>
+			{% for i,x in Words4.items%}
+				<input class="mb-1 mx-2   verifyBtn"  id={{i}} type="text" name={{i}} placeholder="Word {{x}}"></input>
+			{% endfor %} 
+			<br/>
+			{% for i,x in Words5.items%}
+				<input class="mb-1 mx-2   verifyBtn"  id={{i}} type="text" name={{i}} placeholder="Word {{x}}"></input>
+			{% endfor %}
+			<br/>
+			<br/>  
+			<div class="row">
+				<button type="reset" class="col-5 btn btn-primary btn-lg float-start mt-2 my-2 reset-btn-recover">Reset</button>  
+				<button type="submit" class="col-5 btn btn-primary btn-lg float-end mt-2 my-2 submit-btn-recover">Submit</button>
+			</div>
+		</form>
+    </div>
+</div>
+{% endblock main %}

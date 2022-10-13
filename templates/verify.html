@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Veirfy your Passphrase{% endblock title %}
+
+{% block style %}
+.main-container{
+  width:780px !important;
+  height:max-content;
+}
+input{
+  text-align:center;
+}
+.swal-button--confirm{
+  background-color:rgb(79,79,164);
+}
+.swal-content{
+  font-size: 0.5cm;
+}
+.main-heading{
+  font-size:35px;
+}
+.heading-small{
+  font-size:20px;
+}
+{% endblock style %}
+
+{% block main %}
+<script>
+  {% for msg in messages  %}
+    alertify.set('notifier','position', 'top-left');
+    alertify.{{msg.tags}}('{{msg}}');
+  {% endfor %}
+
+  {% comment %} var fields=$(".words"); {% endcomment %}
+  var fields=document.getElementsByClassName("words");
+  state=false;
+  val=[];
+  count=0;
+  function select(obj){
+    if(count!=5){
+      $("#"+obj.id).css("background-color","rgb(51,57,125)");
+      $("#"+obj.id).css("color","#ffffff");
+      val[count]=obj.innerHTML;
+      obj.setAttribute('disabled','');
+      fields[count].value=val[count].trim();
+      count++;
+    }  
+  }
+</script>
+<div class="col">
+  <!-- main heading -->
+  <div class="row">
+    <div class="main-heading">Verify Passphrase</div>
+      <!-- company logo -->
+      <div class="row-sm text-center">
+        <img class="main-logo" src="../static/images/icon/key-icon-big.png" alt=""/>
+      </div>
+      <div class="text-center heading-small">To verify, select five words which appear in your passphrase.</div>
+      <!-- spacebar -->
+      <div class="v-line mb-3"></div>
+        <div class="verify-btns text-center" >
+          <form action="" method="post">
+            {% csrf_token %}
+            <div style="display:none;position: relative;top: 7cm;left: 0.5cm;">
+              <input style="text-align:center;" type="text" readonly class="words" name="word1" value=""/>
+              <input style="text-align:center;" type="text" readonly class="words" name="word2" value=""/>
+              <input style="text-align:center;" type="text" readonly class="words" name="word3" value=""/>
+              <input style="text-align:center;" type="text" readonly class="words" name="word4" value=""/>
+              <input style="text-align:center;" type="text" readonly class="words" name="word5" value=""/>
+            </div>
+            {% for i,x in Words1.items%}
+              <button class="verifyBtn" id={{i}} onclick="select(this)" type="button" name={{i}}> {{x}}</button>
+            {% endfor %}
+            <br/>
+            {% for i,x in Words2.items%}
+              <button class="verifyBtn" type="button" onclick="select(this)"  id={{i}} type="text" name={{i}} >{{x}}</button>
+            {% endfor %} 
+            <br/>
+            {% for i,x in Words3.items%}
+              <button class="verifyBtn" type="button" onclick="select(this)"   id={{i}} type="text" name={{i}} >{{x}}</button>
+            {% endfor %} 
+            <br/>
+            <div class="row my-3">
+              <button type="submit" class="col-4 btn btn-primary btn-lg submit-btn-verify big-btn green-btn float-start ">Submit</button>
+            </div>
+          </form>
+          <div class="row">
+            <button onclick="location.href='{% url 'verify'%}'" class="col-4 btn btn-primary btn-lg reset-btn-verify big-btn transparent-btn float-start" >Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+{% endblock main %}

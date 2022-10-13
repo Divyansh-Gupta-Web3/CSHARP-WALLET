@@ -1,0 +1,162 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Notifications{% endblock title %}
+{% block heading %}Notifications{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block style %}
+
+{% endblock style %}
+{% block content %}
+<p style="display:none;" id="sessionName">{{session_net}}</p>
+ 
+<div class="p-2 pb-0 rounded-3">
+
+	{% for i in txn_datas %}
+
+	{% if i.tnxtype == "Sent" %}
+	<a id="{{i.id}}" onclick="txnDetails(this)" class="sent-txn">
+		<div class="notification-text sent-text">
+			You {{i.tnxtype}} {{i.amount}} to <span class="text-info"><u>{{i.receiver}}</u></span>
+		</div>
+		<span class="link-secondary date-time">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+				<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+			</svg>
+				{% now "Y-m-d" as todays_date %}
+				{% if todays_date == i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Today, {{i.time|date:"h:i"}}a
+					{% else %}
+						Today, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Yesterday, {{i.time|date:"h:i"}}a
+					{% else %}
+						Yesterday, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% else %}
+				{% if i.time|date:"A" == "AM" %}
+						{{i.time|date:"M d, Y,  h:i"}}a
+					{% else %}
+						{{i.time|date:"M d, Y,  h:i"}}p
+					{% endif %}
+				{% endif %}
+		</span>
+	</a>
+	<hr>
+	{% elif i.tnxtype == "Received" %}
+		<a id="{{i.id}}" onclick="txnDetails(this)" class="received-txn">
+			<div class="notification-text rec-text ">
+				You {{i.tnxtype}} {{i.amount}} from <span class="text-info"><u> {{i.sender}} </u></span>
+			</div> 
+			<span class="link-secondary date-time">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+					<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+					<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+				</svg>
+				{% now "Y-m-d" as todays_date %}
+				{% if todays_date == i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Today, {{i.time|date:"h:i"}}a
+					{% else %}
+						Today, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Yesterday, {{i.time|date:"h:i"}}a
+					{% else %}
+						Yesterday, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% else %}
+				{% if i.time|date:"A" == "AM" %}
+						{{i.time|date:"M d, Y,  h:i"}}a
+					{% else %}
+						{{i.time|date:"M d, Y,  h:i"}}p
+					{% endif %}
+				{% endif %}
+			</span>
+		</a>
+		<hr>
+		{% elif i.tnxtype == "NFT" %}
+		<a id="{{i.id}}" onclick="txnDetails(this)" class="received-txn">
+		<div class="notification-text asset">
+				Asset added successfully to your account <span class="text-info"><u> See details </u></span>
+			</div> 
+			<span class="link-secondary date-time">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+					<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+					<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+				</svg>
+				{% now "Y-m-d" as todays_date %}
+				{% if todays_date == i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Today, {{i.time|date:"h:i"}}a
+					{% else %}
+						Today, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% elif  addDays|date:"Y-m-d" ==  i.time|date:"Y-m-d" %}
+					{% if i.time|date:"A" == "AM" %}
+						Yesterday, {{i.time|date:"h:i"}}a
+					{% else %}
+						Yesterday, {{i.time|date:"h:i"}}p
+					{% endif %}
+				{% else %}
+				{% if i.time|date:"A" == "AM" %}
+						{{i.time|date:"M d, Y,  h:i"}}a
+					{% else %}
+						{{i.time|date:"M d, Y,  h:i"}}p
+					{% endif %}
+				{% endif %}
+			</span>
+		</a>
+		<hr>
+    {% elif i.type == "Request" %}
+	<div class="request-text notification-text " href="/request">
+		{{i.sender_username}} sent you a request for {{i.token}} CSharp <a class="text-info" href="/request"><u> Respond</u></a>
+		<br/>
+		<span class="link-secondary date-time">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+				<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+			</svg>
+		{% now "Y-m-d" as todays_date %}
+				{% if todays_date == i.date|date:"Y-m-d" %}
+					{% if i.date|date:"A" == "AM" %}
+						Today, {{i.date|date:"h:i"}}a
+					{% else %}
+						Today, {{i.date|date:"h:i"}}p
+					{% endif %}
+				{% elif  addDays|date:"Y-m-d" ==  i.date|date:"Y-m-d" %}
+					{% if i.date|date:"A" == "AM" %}
+						Yesterday, {{i.date|date:"h:i"}}a
+					{% else %}
+						Yesterday, {{i.date|date:"h:i"}}p
+					{% endif %}
+				{% else %}
+				{% if i.date|date:"A" == "AM" %}
+						{{i.date|date:"M d, Y,  h:i"}}a
+					{% else %}
+						{{i.date|date:"M d, Y,  h:i"}}p
+					{% endif %}
+				{% endif %}
+		</span>
+	</div>
+	<hr>
+	{% endif %}
+	{% endfor %}
+</div>
+Showing {{ txn_datas.start_index }}-{{ txn_datas.end_index }} of {{ txn_datas.paginator.count }} notifications.
+<div class="table-buttons d-flex justify-content-end">
+    {%if txn_datas.has_previous %}
+    	<a href="?page={{txn_datas.previous_page_number}}">Previous</a>
+    {% endif %}
+    	<span class="num-btns mx-2" style="background-color: rgb(51,57,125);color: white; border: none; border-radius:20px; padding-top:2.5px;" id="numBtns">{{ txn_datas.number }}</span>
+    {%if txn_datas.has_next %}
+    	<a href="?page={{txn_datas.next_page_number}}">Next</a>
+    {% endif %}
+</div>
+   
+
+
+{% endblock content %}

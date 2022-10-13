@@ -1,0 +1,93 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Send CSharp{% endblock title %}
+{% block heading %}Send CSharp{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block content %}
+<script>
+  {% for msg in messages %}
+  {% if msg|stringformat:'s' == "Incorrect Password" %}
+  alertify.set('notifier','position', 'top-center');
+  alertify.{{msg.tags}}('{{msg}}');
+  {% elif msg.tags|stringformat:'s' == "success" %}
+  swal({
+      title: "Transaction Successful",
+      text: "Transaction ID : {{msg}}",
+      icon: "success",
+      button: "OK",
+    });
+    {% else %}
+    swal({
+        title: "Transaction Failed",
+        text: "Transaction ID : {{msg}}",
+        icon: "error",
+        button: "OK",
+      });
+  {% endif %}
+{% endfor %}
+</script>
+
+<div class="row gy-3">
+    <div class="col-sm-12 col-md-6">
+        <div class="sending-details card-box">
+            <div class="main-heading">Enter Details Below</div>
+            <form  autocomplete="off" action="" method="post">
+                    {% csrf_token %}
+                    <div class="inputs px-4 ">
+                        {% if request_obj %}
+                            <input  readOnly="readOnly" autocomplete="off" class="address text-truncate disable-bg" id="address" placeholder="Recipient's Account Address" type="text"
+                            name="address" value="{{request_obj.sender.Address}}"/>
+                            <input  step="any" readOnly="readOnly" autocomplete="off" class="amount disable-bg" id="amount" type="number" placeholder="0.000" name="amount" value="{{request_obj.token}}"/>
+                            <input onpaste="return false;" ondrop="return false;" type="password" autocomplete="off" class="send-pwd " id="send-pwd" placeholder="Password"  name="password"/>
+                            <button type="reset" type="button" class="reset-btn">CLEAR</button>
+                            {% elif favid %}
+                            <input  readOnly="readOnly" autocomplete="off" class="address text-truncate disable-bg" id="address" placeholder="Recipient's Account Address" type="text"
+                            name="address" value="{{favid}}"/>
+                            <input step="any" autocomplete="off" class="amount" id="amount" type="number" placeholder="0.000" name="amount" />
+                            <input onpaste="return false;" ondrop="return false;" type="password" autocomplete="off" class="send-pwd " id="send-pwd" placeholder="Password"  name="password"/>
+                            <button onclick=" clearAddress()" type="button" type="button" class="reset-btn">CLEAR</button>
+                        {% else%}
+                        <input  autocomplete="off" class="address text-truncate" id="address" placeholder="Recipient's Account Address" type="text"
+                            name="address" value="{{favid}}"/>
+                        <input step="any" autocomplete="off" class="amount" id="amount" type="number" placeholder="0.000" name="amount" />
+                        <input onpaste="return false;" ondrop="return false;" type="password" autocomplete="off" class="send-pwd " id="send-pwd" placeholder="Password"  name="password"/>
+                        <button onclick=" clearAddress()" type="button" class="reset-btn">CLEAR</button>
+                        {% endif %}
+                        <button name="send" id="send-btn" class="send-mpayz-btn" type="submit">SEND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="favorites card-box">
+            <div class="main-heading">Favorites</div>
+            <div class="fav-table-2">
+                <table>
+                    {% for i in contacts %}
+                    <tr>
+                        <td>
+                            {% if i.profile_pic %}
+                                <img height="50" width="50" src="/{{i.profile_pic}}" alt="">
+                            {% else %}
+                                <img height="50" width="50" src="/static/images/adminpanellogo.png" alt="">
+                            {% endif %}
+                        </td>
+                        <td class="nameF">{{i.name}}</td>
+                        <td class="send-page-btn d-flex justify-content-end"> 
+                            <button onclick=" sendAddress(this)" class="fav-send" id="{{i.contact_address}}" value="Send"/>
+                                <img class="send-address-img" src="../static/images/icon/icon-send-sm.png" alt="">
+                                <span class="FavBtnText-send">Send</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <p class="no-fav-text">No Favorite Contact added</p>
+                    {% endfor %}
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block style %}
+{% endblock style %}

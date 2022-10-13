@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Account{% endblock title %}
+{% block style %}
+.main-container{
+    width:600px !important;
+    height:575px;
+}
+
+.main-heading{
+    font-size:35px;
+    margin:-8px 0;
+}
+
+.pwd-toggle, .pwd-toggle:hover
+{
+    position: absolute;
+    top: 23px;
+    left: 140px;
+    color:black;
+}
+
+.v-line{
+    margin: 5px auto !important;
+}
+
+{% endblock style %}
+ 
+{% block main %}
+<script>
+    {% for msg in messages  %}
+      alertify.set('notifier','position', 'top-left');
+      alertify.{{msg.tags}}('{{msg}}');
+    {% endfor %}
+  
+
+   
+
+</script>
+
+<div class="col">
+   
+    <!-- main heading -->
+    <div class="row">
+        <div class="main-heading">Add a new account</div>
+    </div>
+
+    <!-- company logo -->
+    <div class="row-sm text-center">
+        <img class="main-logo" src="../static/images/adminpanellogo.png" alt=""/>
+    </div>
+
+    <!-- spacebar -->
+    <div class="v-line "></div>
+
+    <div class="create-wallet-content">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <label for="accname">User Name</label><br/>
+                <input onkeyup=" checkLength(this)" autocomplete="off" type="text" class="my-2 acc-name col-5"  name="accname" required></input>
+                <p class="text-danger max-char-text"><span>i</span>User name can only be 7 characters long.</p>
+            </div>
+
+            <div class="row">
+                <label for="acc-img">User Image</label><br/>
+                <input id="acc-img" onchange=" validateSize(this)"  type="file" class="my-2 mb-3 pt-1 acc-img col-5"  name="image" required/>
+                <span class="acc-img-notice">Choose this image wisely as your NFT will be based on this.</span>
+            </div>
+   
+            <div class="row">
+                <label for="accname">Password</label><br/>
+              
+            <input id="signup-pwd" autocomplete="off" name="password" type="password"  class="my-2 acc-name col-5" placeholder="••••••••">
+                    <span style="border:none;" class="input-group-text">
+                        <a class="pwd-toggle" onclick=" SignUpPassword()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                                <path
+                                    d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                            </svg>
+                        </a>
+                    </span>
+                </input>
+        </div>
+        <a class="pwd-tooltip">i</a>
+        <div id="tooltip-text" class="pwd-tooltip-text">
+            Your password must be: <br/>
+            • Atleast 8 characters long <br/>
+            • Having 1 lowercase letter <br/>
+            • Having 1 uppercase letter <br/>
+            • Having 1 number <br/>
+            • Having 1 special character
+        </div>
+            
+            <div class="row">
+                <label for="email">Email</label><br/>
+                <input class="my-2 acc-name col-5" type="email" name="email" required/>
+            </div>
+            
+            
+            <div class="form-check">
+                <input required class="form-check-input" type="checkbox"  id="flexCheck"/>
+                <label class="form-check-label" for="flexCheckDefault">
+                I agree to all the <a class="text-decor-none" href="">Terms & Conditions</a>
+                </label>
+            </div>
+            
+            <div  style="width:111%;" class="row">
+                <button class="col-6 mt-4 btn btn-primary btn-lg big-btn violet-btn" type="submit">SIGNUP</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock main %}

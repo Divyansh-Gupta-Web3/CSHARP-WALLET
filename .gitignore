@@ -1,0 +1,9 @@
+venv
+.idea
+.vscode
+MPayz/__pycache__/*
+MPayz\__pycache__\*
+MPayz/migrations/__pycache__/*
+MPayz\migrations\__pycache__\*
+MPayzWallet\__pycache__\*
+MPayzWallet/__pycache__/*

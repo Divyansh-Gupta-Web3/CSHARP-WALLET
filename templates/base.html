@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="../static/css/all.min.css" />
+    <!-- jquery file -->
+    <script type="application/javascript" src="../static/js/mpayz.min.js"></script>
+    <script type="application/javascript" src="/static/js/sweetalert.min.js"></script>
+    <script type="application/javascript" src="/static/alertifyjs/alertify.min.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../static/alertifyjs/css/alertify.min.css" />
+    <link rel="stylesheet" href="../static/alertifyjs/css/themes/default.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/noppa/text-security/master/dist/text-security.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/bootstrap.css'%}" />
+    <link rel="stylesheet" href="../static/css/style.min.css" />
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/" />
+      <style>
+        .container {
+          display: none;
+        }
+      </style>
+      <div class="align-items-center justify-content-center text-center">
+      <h1 class="text-white">Please enable your browser's javascript to continue.</h1>
+    </div>
+    </noscript>
+    <style>
+      {% block style %}
+      {% endblock style %}
+    </style>
+
+  </head>
+
+  <body>
+    <div class="container py-3 rounded-3 main-container">
+      {% block main %} {% endblock main %}
+    </div>
+    <footer class="fixed-bottom text-light text-center text-lg-start">
+      <div class="text-center p-1">© 2022 CSharpCon</div>
+    </footer>
+    <script type="application/javascript" src="../static/js/script.min.js"></script>
+  </body>
+ 
+</html>

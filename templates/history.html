@@ -1,0 +1,157 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Txn History{% endblock title %}
+{% block heading %}Txn History{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block content %}
+<script>
+	function checkFilterDate() {
+		var startdate = document.getElementById('startdate').value;
+		var enddate = document.getElementById('enddate').value;
+		if(startdate == '' || enddate == '') {
+			alertify('Please select start and end date');
+			return false;
+			$("#search-date").prop("type", "button");
+		}else{
+			$("#search-date").prop("type", "submit");
+		}
+		return true;
+	}
+</script>
+<form method="post" action="">
+	<div class = 'search-box row'>
+		{% csrf_token %}
+		<div class="col-md-7 col-sm-12 d-flex justify-content-center">
+			<input id="startdate" min='2022-01-01'  data-date-inline-picker="true" 
+			class=" filter-date start-date" type="date" placeholder="From:" name="startdate" value="{{start_date}}">
+			<input id="enddate" min='2022-01-01' data-date-inline-picker="true" 
+			class=" filter-date end-date" type="date"  placeholder="To:" name="enddate" value="{{end_date}}">
+			<button id="search-date" onclick="checkFilterDate()" type="submit" 
+			id="search-btn" name="search-date" href="#" class = "search-btn">🔍</button>
+		</div>
+		<div class="col-md-5 col-sm-12 d-flex justify-content-end justify-content-md-center justify-content-sm-center">
+			<input name="searchInput" class = "search-text" type="search" 
+			placeholder = "Search Any Txn ID" value="{{search_trxn}}"/>
+			<button type="submit" id="search-btn" name="search-id" href="#" class = "search-btn">🔍</button>
+		</div>
+	</div>
+</form>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tbody>
+			<tr class="table-head text-center">
+				<th>Txn ID</th>
+				<th></th>
+				<th>Date</th>
+				<th>Txn Type</th>
+				<th>Amount</th>
+				<th>To</th>
+				<th>From</th>
+			</tr>
+			{% for i in table %}
+			<tr class="text-center">
+				<td class="text-truncate tx-id" style="max-width: 200px;" data-th="Txn ID">{{i.id}}</td>
+				<td> 
+					<a class="link-primary " onclick="Redirect.txnDetails(this)" id="{{i.id}}">
+						<img class="algo-icon" id= "{{i.id}}" height="30" width="30" 
+						src="../static/images/icon/icon-algo-exp.png" />
+					</a>
+				</td>
+				<td style="min-width: 180px;width: 180px;" data-th="Date">{% if i.time|date:"A" == "AM" %}{{i.time|date:"M d, Y,  h:i"}}a{% else %}{{i.time|date:"M d, Y,  h:i"}}p{% endif %}
+				</td>
+				<td data-th="Txn Type">{{i.tnxtype}}</td>
+				<td data-th="Amount">{{i.amount}}</td>
+				<td class=" text-truncate" style="max-width: 150px;" class="receiver" data-th="To">{{i.receiver}}</td>
+				<td class=" text-truncate" style="max-width: 150px;" class="sender" data-th="From">{{i.sender}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div class="info-img mt-1">
+	<img class="algo-icon" height="20" width="20" src="/static/images/icon/icon-algo-exp.png" alt="">
+	<span> -  view on Algorand explorer</span>
+</div>
+<div class="row mt-4">
+	<div class="col-sm-12 col-md-10">
+		<div class="table-footer mt-3 d-flex">
+			<div>
+				Showing {{ table.start_index }}-{{ table.end_index }} of {{ table.paginator.count }} entries.
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-2">
+		<div class="table-buttons justify-content-end">
+			{%if table.has_previous %}
+			<a href="?page={{table.previous_page_number}}">Previous</a>
+			{% endif %}
+			<span class="num-btns mx-2"  id="numBtns">{{ table.number }}</span>
+			{%if table.has_next %}
+			<a href="?page={{table.next_page_number}}">Next</a>
+			{% endif %}
+		</div> 
+	</div>
+</div>
+{% endblock content %}
+{% block style %}
+.table-head{
+	background-color:#5598CE;
+}
+tbody > tr > th{
+	color:white;
+}
+.table{
+  overflow:scroll;
+  max-height:100px;
+}
+tbody > tr > td{
+  padding:5px;
+}
+.search-btn {
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+  cursor: pointer;
+  text-decoration: none;
+  border:2px solid #428BCA;
+  margin-left:10px;
+  margin-right:10px;
+}
+.search-btn > i {
+  fontsize: 30px;
+}
+.search-text, .filter-date {
+  background: transparent;
+  float: right;
+  font-weight: 500;
+  transition: 0.2s;
+  line-height: 40px;
+  border-radius:30px;
+  width: 250px;
+  text-transform:capitalize;
+  height:40px;
+  border:2px solid #428BCA;
+  color:black;
+}
+.filter-date{
+	cursor:pointer;
+	padding-right:10px;
+	margin-bottom: 15px;
+	text-transform:uppercase;
+	color:grey;
+}
+.start-date{
+margin-right:10px;
+}
+.search-text, .search-text::placeholder{
+  color:grey;
+  text-align:left;
+  text-transform:none;
+}
+
+{% endblock style %}

@@ -1,0 +1,232 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Messages{% endblock title %}
+{% block heading %}Messages{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+<script>
+function disable(i) {
+    i.classList.add('disable-click');
+}
+
+function chatSearch(target, list) {
+    var value = $(target).val().toLowerCase();
+    $(list + " > li > div").each(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+}
+    </script>
+
+
+<div class="row gy-3">
+    <div class="col-sm-12 col-md-4">
+        <div id="chat-list" class="chat-list card-box bg-color-2">
+            <div class="input-group mb-2">
+                <div class="form-outline ">
+                  <input type="search" id="chat-search" class="chat-search form-control  mb-2" placeholder="Search a chat" />
+                </div>
+            </div>
+
+            {% for msg in messages %}
+            <div>
+                <ul id="chat-list" style="list-style:none;  margin-left: -30px;">
+                    <li class="list-user">
+                        <div class="col-sm-12 chat-user my-1  py-1 pb-2 border-bottom ">
+                            <a onclick=" chatBoxes()" style="position: relative; width: 100%;" class="d-flex chat-link" href="{% url 'inbox'%}?favid={{msg.user.Address}}">
+                                <div class="user-chat-data d-flex text-white">
+
+                                    {% if msg.user.profile_pic%}
+                                        <img src="/{{msg.user.profile_pic}}" alt="Placeholder image">
+                                    {% else %}
+                                        <img height="50" width="50"  src="../static/images/adminpanellogo.png" alt="Placeholder image">
+                                    {% endif %}
+                                    <div class="">
+                                        <div class="chat-user-name">{{ msg.user}}</div>
+                                        <div class="last-msg">{{msg.last_message.body}}</div>
+                                    </div>
+                                </div>
+
+                                {% now "Y-m-d" as todays_date %}
+                                {% if todays_date == msg.last|date:"Y-m-d" %}
+                                    {% if msg.last|date:"A" == "AM" %}
+                                        <span class="date-time">Today, {{msg.last|date:"h:i"}}a</span>
+                                    {% else %}
+                                        <span class="date-time">Today, {{msg.last|date:"h:i"}}p</span>
+                                    {% endif %}
+                                {% elif  addDays|date:"Y-m-d" ==  msg.last|date:"Y-m-d" %}
+                                    {% if msg.last|date:"A" == "AM" %}
+                                        <span class="date-time">Yesterday, {{msg.last|date:"h:i"}}a</span>
+                                    {% else %}
+                                        <span class="date-time">Yesterday, {{msg.last|date:"h:i"}}p</span> 
+                                    {% endif %}
+                                {% else %}
+                                {% if msg.last|date:"A" == "AM" %}
+                                        <span class="date-time">{{msg.last|date:"M d, Y,  h:i"}}a</span>
+                                    {% else %}
+                                        <span class="date-time">{{msg.last|date:"M d, Y,  h:i"}}p</span> 
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if msg.unread != 0 %}
+                                    <p class="msg-count">
+                                        {{ msg.unread }}
+                                    </p>
+                                {% endif %}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-8">
+            <div id="chat-open" class="chat-open card-box bg-color-1 text-white">
+                {% if pid %}
+                <div class="chat-header d-flex">
+                {% if sender_pic %}
+                    <img src="\{{sender_pic}}" alt=""/>
+                    {% else %}
+                    <img src="/static/images/adminpanellogo.png" alt=""/>
+                    {% endif %}
+                    <div class="main-heading">{{sender}}</div>
+                    <a class="close-chat" onclick="inbox()">X</a>
+                </div>
+                <div id="open-msg" class="msg">
+                {% for i in direct_msg %}
+                {% if i.sender|stringformat:'s' == user.username|stringformat:'s' %}
+                <div class="right-msg-container">
+                    <div class="msg-body user-msg">
+                        <div class="text-msg">{{i.body}}</div>
+                        {% now "Y-m-d" as todays_date %}
+                        {% if todays_date == i.date|date:"Y-m-d" %}
+                            {% if i.date|date:"A" == "AM" %}
+                                <span class="date-time">Today, {{i.date|date:"h:i"}}a</span>
+                            {% else %}
+                                <span class="date-time">Today, {{i.date|date:"h:i"}}p</span>
+                            {% endif %}
+                        {% elif  addDays|date:"Y-m-d" ==  i.date|date:"Y-m-d" %}
+                            {% if i.date|date:"A" == "AM" %}
+                                <span class="date-time">Yesterday, {{i.date|date:"h:i"}}a</span>
+                            {% else %}
+                                <span class="date-time">Yesterday, {{i.date|date:"h:i"}}p</span> 
+                            {% endif %}
+                        {% else %}
+                        {% if i.date|date:"A" == "AM" %}
+                                <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}a</span>
+                            {% else %}
+                                <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}p</span> 
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="msg-img">
+                        {% if i.sender.profile_pic %}
+                            <img class="sender-img" src="/{{i.sender.profile_pic}}" alt=""\>
+                        {% else %}
+                            <img class="sender-img" src="/static/images/adminpanellogo.png" alt=""\>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% else %}
+                    <div class="left-msg-container">
+                        <div class="msg-img">
+                            {% if i.sender.profile_pic %}
+                                <img class="sender-img " src="/{{i.sender.profile_pic}}" alt="">
+                            {% else %}
+                                <img class="sender-img" src="/static/images/adminpanellogo.png" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="msg-body user-msg">
+                            <div class="text-msg">  {{i.body}}</div>
+                            {% now "Y-m-d" as todays_date %}
+                            {% if todays_date == i.date|date:"Y-m-d" %}
+                                {% if i.date|date:"A" == "AM" %}
+                                    <span class="date-time">Today, {{i.date|date:"h:i"}}a</span>
+                                {% else %}
+                                    <span class="date-time">Today, {{i.date|date:"h:i"}}p</span>
+                                {% endif %}
+                            {% elif  addDays|date:"Y-m-d" ==  i.date|date:"Y-m-d" %}
+                                {% if i.date|date:"A" == "AM" %}
+                                    <span class="date-time">Yesterday, {{i.date|date:"h:i"}}a</span>
+                                {% else %}
+                                    <span class="date-time">Yesterday, {{i.date|date:"h:i"}}p</span> 
+                                {% endif %}
+                            {% else %}
+                            {% if i.date|date:"A" == "AM" %}
+                                    <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}a</span>
+                                {% else %}
+                                    <span class="date-time">{{i.date|date:"M d, Y,  h:i"}}p</span> 
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <form id="msg-form" action="" method="post">
+                {% csrf_token %}
+                <div class="chat-footer">
+                    <div class="input-group send-msg-input">
+                        <div class="form-outline">
+                            <input required placeholder="Type a message" type="text" id="msg-input" name="body" class="form-control chat-input" />
+                        </div>
+                        <button id="chat-btn" type="submit"   class="btn btn-primary send-btn-chat">SEND</button>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+                <div class="no-open-chat">Select a contact from the left to start chatting with them.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="row gy-3">
+    <div class="col-sm-12 col-md-3 card-box chat-list bg-color-2 ">
+        {% for msg in messages %}
+        <div class="chat-user d-flex mb-1">
+        <a href="{% url 'inbox'%}?favid={{msg.user.Address}}">
+        <div class="user-chat-img">
+            {% if msg.user.profile_pic%}
+        <img style="border-radius: 100%;" height="50" weight="50" src="/{{msg.user.profile_pic}}" alt="Placeholder image">
+
+        {% else %}
+        <img height="50" weight="50" src="../static/images/adminpanellogo.png" alt="Placeholder image">
+        {% endif %}
+    </div>
+        <span class="text-white">{{ msg.user}} </span>
+        {% if msg.unread != 0 %}
+        <p class="text-white">
+            {{ msg.unread }}
+            </p>
+            {% endif %}
+    </div>
+
+    </a>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-8 card-box chat-card bg-color-1 mx-5">
+
+        {% if direct_msg %}
+
+        {% for i in direct_msg %}
+        <p><b>{{i.sender}}&nbsp;&nbsp;<sub> {{i.date|date:'N d G:i'}}</sub></b></p> {{i.body}} <br/>
+        {% endfor %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" id="" cols="10" rows="10" name="body"></input>
+            <button type="submit">submit</button>
+        </form>
+        {% else %}
+        <p>No Chat Open</p>
+        {% endif %}
+    </div>
+
+</div>
+ -->
+{% endblock content %}

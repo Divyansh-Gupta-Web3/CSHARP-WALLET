@@ -1,0 +1,125 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Request CSharp{% endblock title %}
+{% block heading %}Request CSharp{% endblock heading %}
+{% block toggle %}{% endblock toggle %}
+{% block content %}
+<script>
+    {% for msg in messages %}
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.{{msg.tags}}('{{msg}}');
+    {% endfor %}
+</script>
+<div class="row gy-3 ">
+    <div class="col-sm-12 col-md-6">
+        <div class="request-details card-box bg-color-1">
+            <div class="main-heading">Enter Details Below</div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="inputs px-4">
+                    {% if favid %}
+                    <input readOnly class="address text-truncate disable-bg" id="address" placeholder="Enter Account Address" type="text" name="address" value="{{favid}}"/>
+                    {% else %}
+                    <input class="address text-truncate" id="address" placeholder="Enter Account Address" type="text" name="address"/>
+                    {% endif %}
+                    <input step="any"  class="amount"   id="amount" type="number" placeholder="0.000" name="amount"/>
+                    <button onclick=" clearAddress()"  type="button" class="reset-btn ">CLEAR</button>
+                    <button id="send-btn"  class="request-details-btn"  type="submit" class="btn">REQUEST</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="favorites card-box">
+            <div class="main-heading">Favorites</div>
+            <div class="fav-table-2">
+            <table>
+                {% for i in contacts %}
+                <tr>
+                    <td>{% if i.profile_pic %}
+                            <img height="50" width="50" src="/{{i.profile_pic}}" alt="">
+                        {% else %}
+                            <img height="50" width="50"  src="/static/images/adminpanellogo.png" alt="">
+                        {% endif %}
+                    </td>
+                    <td class="nameF">{{i.name}}</td>
+                    <td class="request-page-btn d-flex justify-content-end"> 
+                        <button onclick=" sendAddress(this)" id="{{i.contact_address}}" class="fav-request" id="fav-request">
+                            <img class="request-address-img" src="../static/images/icon/icon-receive-sm.png" alt=""/>
+                            <span class=" FavBtnText-receive">Request</span>
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <p class="no-fav-text">No Favorite Contact added</p>
+                {% endfor %}
+            </table>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 mx-auto">
+        <div class="request-details card-box bg-color-2">
+            <div class="main-heading">Requests</div>
+                <div class="table-responsive requests-table">
+                    <table  class="table text-white">
+                        <tbody>
+                            {% if get_request %}
+                            <tr class="table-head text-center request-table-header">
+                                <th>No</th>
+                                <th>Amount</th>
+                                <th>From / To</th>
+                                <th>Status</th>
+                                <th>Request Type</th>
+                            </tr>
+                            {% for i in get_request %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% if i.sender|stringformat:'s' == user.username|stringformat:'s' %}
+                                <td>{{i.token}} CSharp</td>
+                                <td>{{i.recipient}}</td>
+                                <td>
+                                    {% if i.is_accepted|stringformat:'s' == "True" %}
+                                        <span style="color: #33c983;">Accepted</span>
+                                    {% elif i.is_rejected|stringformat:'s' == "True" %}
+                                        <span style="color:#f76f6f" class="p-1 rounded-3   ">Rejected</span>
+                                    {% else %}
+                                        <span class="p-1 rounded-3  text-warning ">Pending</span>
+                                    {% endif %}
+                                </td>
+                                <td>Sent</td>
+                                {% else %}
+                                <td>{{i.token}} CSharp</td>
+                                <td>{{i.sender}}</td>
+                                <td>
+                                    {% if i.is_accepted|stringformat:'s' == "True" %}
+                                        <span style="color: #33c983;">Accepted</span>
+                                    {% elif i.is_rejected|stringformat:'s' == "True" %}
+                                        <span style="color:#f76f6f" class="p-1 rounded-3 ">Declined</span>
+                                    {% else %}
+                                        <a href="{% url 'request'%}?Acceptid={{i.unique_id}}">
+                                            <button  class="btn  accept-btn">Accept</button>
+                                        </a>
+                                        <a href="{% url 'request'%}?declineid={{i.unique_id}}">
+                                            <button  class="btn  decline-btn">Decline</button>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td>Received</td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                            {% else %}
+                                <span class="text-white">No pending requests</b></span>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block style %}
+.card-box{
+    min-height:auto;
+}
+{% endblock style %}

@@ -1,0 +1,112 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+{% block content_title %} {% trans 'Dashboard' %} {% endblock %}
+{% block title %}Dashboard{% endblock title %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i>
+        {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
+</ol>
+{% endblock %}
+{% block content %}
+{% get_side_menu using="app_list" as dashboard_list %}
+{% if dashboard_list %}
+{% widthratio dashboard_list|length 2 1 as middle %}
+{% endif %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/static/js/mpayz.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.min.js"></script>
+<style>
+    .btn-success{
+        background-color:#6aa06a;
+    }
+    .btn-danger{
+        background-color:#E17588;
+    }
+</style>
+
+<div class="col-sm-12 col-md-6 mb-3 text-center">
+    <div class="row">
+        <div class="col-6">
+            Users' Analytics
+            <select id="user" class="select_period form-select" aria-label="Default select example">
+                <option value="day">Daily</option>
+                <option value="week">Weekly</option>
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+              </select>
+        </div>
+        <div class="col-6">
+            <button class="download-report users pdf btn mb-2  btn-danger">
+                <i class="fa-solid fa-file-pdf"></i>
+               <span>Download PDF</span>
+            </button>
+    
+            <button class="download-report users csv btn mb-2  btn-success">
+                <i class="fa-solid fa-file-csv"></i>
+               <span>Download CSV</span>
+            </button>
+        </div>
+    </div>
+        
+    <canvas id="UserChart"></canvas>
+</div>
+<div class="col-sm-12 col-md-6 mb-5 text-center">
+    <div class="row">
+        <div class="col-6">
+            Txns' Analytics
+            <select id="txn" class="select_period form-select" >
+                
+                <option value="day">Daily</option>
+                <option value="week">Weekly</option>
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+              </select>
+        </div>
+        <div class="col-6">
+            <button class="download-report txns pdf btn  mb-2 btn-danger">
+                <i class="fa-solid fa-file-pdf"></i>
+               <span>Download PDF</span>
+            </button>
+      
+            <button class="download-report txns csv btn  mb-2 btn-success">
+                <i class="fa-solid fa-file-csv"></i>
+               <span>Download CSV</span>
+            </button>
+        </div>
+    </div>
+    <canvas class="text-center" id="TxnChart"></canvas>
+</div>
+
+<div class="col-sm-12 col-md-12 mb-5 text-center">
+    <div class="row">
+        <div class="col-6">
+            Requests' Analytics
+            <select id="request" class="select_period form-select">
+                <option value="day">Daily</option>
+                <option value="week">Weekly</option>
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+              </select>
+        </div>
+        <div class="col-6">
+            <button class="download-report requests pdf  mb-2 btn btn-danger">
+                <i class="fa-solid fa-file-pdf"></i>
+               <span>Download PDF</span>
+            </button>
+
+            <button class="download-report requests csv  mb-2 btn btn-success">
+                <i class="fa-solid fa-file-csv"></i>
+               <span>Download CSV</span>
+            </button>
+        </div>
+    </div>
+    <canvas id="RequestChart"></canvas>
+</div>
+
+{% endblock %}

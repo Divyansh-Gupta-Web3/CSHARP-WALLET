@@ -1,0 +1,1247 @@
+{% extends 'baseDashboard.html' %}
+{% block title %}Patient Details{% endblock title %}
+
+{% block heading %}
+{% if role == "Doctor" %}
+{{report.personal.Name}}
+{% else %}
+Wrong Page
+{% endif %}
+{% endblock heading %}
+
+{% block toggle %}{% endblock toggle %}
+
+{% block style %}
+
+@media(max-width: 1150px) {
+
+    .show-toggle-btn{
+    font-size:12px;
+    }
+    }
+
+
+    {% comment %} version 1 css starts {% endcomment %}
+ .btn-content{
+background-color:#8080806b;
+padding:0 !important;
+padding-left: 10px !important;
+}
+.card-box{
+min-height: 470px;
+}
+
+
+.top-btn, .top-btn:hover, .top-btn:focus{
+background-color: #3400b88f;
+color: #fff;
+border: none;
+}
+body{
+overflow-y:auto;
+overflow-x:hidden;
+}
+
+h6{
+font-size: 14px;
+font-weight: bold;
+color: #000;
+}
+
+
+.collapsible-btn:after {
+top: 10px !important;
+right: 15px !important;
+}
+.card{
+margin-top: 12px;
+margin-bottom: 20px;
+}
+.card h5, .card p{
+color: #000 !important;
+}
+.card-title{
+font-size: 20px;
+font-weight: bold;
+color: #000;
+margin-bottom: 20px;
+}
+body.dark-mode h5,
+body.dark-mode p{
+color: #000 !important;
+}
+
+.input-fields{
+width:10% !important;
+min-width:10% !important;
+height:40px;
+padding: 0 !important;
+border-radius: 10px !important;
+background-color: #fff !important;
+}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+margin: 0
+}
+
+.mt-5{
+margin-top: 5rem !important;
+}
+.modal-body > .form-control, .modal-body > .form-control:focus{
+height: 40px !important;
+margin-bottom: 10px !important;
+color: #000 !important;
+border-radius: 10px !important;
+}
+.form-control:focus,.form-control
+{
+color: #000 !important;
+background-color: #fff !important;
+}
+.form-control::placeholder{
+color: #000 !important;
+}
+.modal-body > .form-control{
+max-width: 220px;
+margin-left: 110px;
+}
+.modal-body p{
+color: #fff !important;
+}
+body.dark-mode .modal-body p{
+color: #000 !important;
+}  
+{% comment %} version 1 css ends {% endcomment %}
+
+
+{% comment %} version 2 css starts {% endcomment %}
+ .newDesign1  .btn-content{
+    background-color:#f8f8f8;
+    margin-bottom:20px;
+    padding:0 !important;
+    padding-left: 10px !important;
+    
+    }
+    .newDesign1 .collapsible-btn{
+        background-color: transparent;
+        color: #000;
+        border-bottom: 1px solid #e6e6e6;
+        margin-bottom:10px;
+        border-radius: 0;
+    }
+    .newDesign1  .collapsible-btn:after{
+        filter:none;
+    }
+
+    .newDesign1 .card{
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-radius: 0;
+    border: 1px solid #e6e6e6;
+    box-shadow: none;
+    }
+    .newDesign1 .nft-row{
+        --bs-gutter-x: 0 !important;
+        --bs-gutter-y: 0 !important;
+        margin-bottom: 15px;
+        
+    }
+
+    .newDesign1 .card-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #313575 !important;
+    margin-bottom: 20px;
+    text-align:left;
+    }
+
+
+{% comment %} version 2 css ends {% endcomment %}
+
+
+{% comment %} version 3 css starts {% endcomment %}
+ .newDesign2 .btn-content{ 
+    background-color:#fff;
+    margin-bottom:20px;
+    border: 2px solid #e6e6e6;
+    border-radius: 10px;
+    padding:0 !important;
+    padding-left: 10px !important;
+    }
+    .newDesign2 .collapsible-btn{
+        background-color: transparent;
+        color: #000;
+    }
+
+    .newDesign2  h6{
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    }
+    
+    
+    .newDesign2 .collapsible-btn:after {
+    top: 10px !important;
+    right: 15px !important;
+    filter:none;
+    }
+    .newDesign2  .card{
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 0;
+    border:none;
+    box-shadow:none;
+    }
+    .newDesign2  .nft-row{
+        --bs-gutter-x: 0 !important;
+        --bs-gutter-y: 0 !important;
+        border: none;
+        margin-bottom: 15px;
+        
+    }
+ 
+    .newDesign2 .card-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #313575 !important;
+    margin-bottom: 20px;
+    text-align:left;
+    }
+  
+{% comment %} version 3 css ends {% endcomment %}
+{% endblock style %}
+{% block content %}
+{% if role == "Doctor" %}
+<div id="show-more" class="row newDesign2">
+    <button type="button" class="collapsible-btn h3 pb-3">1. INSURANCE PROVIDERS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.INSURANCE_PROVIDERS.0.Plan}}</h5>
+                        <div class="text-start">
+                            <h5>Payer</h5>
+                            <p>
+                                N/A
+                            </p>
+                            <h5>Claims Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Claim_Address}}
+                            </p>
+                            <h5>Claims Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Claims_Phone}}
+                            </p>
+                            <h5>Policy Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Policy_Number}}
+                            </p>
+                            <h5>Group Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Group_Number}}
+                            </p>
+                            <h5>Relation</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Relation}}
+                            </p>
+                            <h5>Employer</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Employer}}
+                            </p>
+                            <h5>Guarantor Name</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Guarantor_Name}}
+                            </p>
+                            <h5>Guarantor DoB</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Guarantor_DoB}}
+                            </p>
+                            <h5>Guarantor Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Guarantor_Address}}
+                            </p>
+                            <h5>Guarantor Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.0.Guarantor_Phone}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.INSURANCE_PROVIDERS.1.Plan}}</h5>
+                        <div class="text-start">
+                            <h5>Payer</h5>
+                            <p>
+                                N/A
+                            </p>
+                            <h5>Claims Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Claim_Address}}
+                            </p>
+                            <h5>Claims Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Claims_Phone}}
+                            </p>
+                            <h5>Policy Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Policy_Number}}
+                            </p>
+                            <h5>Group Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Group_Number}}
+                            </p>
+                            <h5>Relation</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Relation}}
+                            </p>
+                            <h5>Employer</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Employer}}
+                            </p>
+                            <h5>Guarantor Name</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Guarantor_Name}}
+                            </p>
+                            <h5>Guarantor DoB</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Guarantor_DoB}}
+                            </p>
+                            <h5>Guarantor Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Guarantor_Address}}
+                            </p>
+                            <h5>Guarantor Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.1.Guarantor_Phone}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.INSURANCE_PROVIDERS.2.Plan}}</h5>
+                        <div class="text-start">
+                            <h5>Payer</h5>
+                            <p>
+                                N/A
+                            </p>
+                            <h5>Claims Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Claim_Address}}
+                            </p>
+                            <h5>Claims Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Claims_Phone}}
+                            </p>
+                            <h5>Policy Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Policy_Number}}
+                            </p>
+                            <h5>Group Number</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Group_Number}}
+                            </p>
+                            <h5>Relation</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Relation}}
+                            </p>
+                            <h5>Employer</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Employer}}
+                            </p>
+                            <h5>Guarantor Name</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Guarantor_Name}}
+                            </p>
+                            <h5>Guarantor DoB</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Guarantor_DoB}}
+                            </p>
+                            <h5>Guarantor Address</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Guarantor_Address}}
+                            </p>
+                            <h5>Guarantor Phone</h5>
+                            <p>
+                                {{report.INSURANCE_PROVIDERS.2.Guarantor_Phone}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">2. PROBLEMS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <div class="text-start">
+                            <p>
+                                {{report.PROBLEMS}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">3. RESULTS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.RESULTS.0.Test_Name}}</h5>
+                        <div class="text-start">
+                            <h5>Collected at</h5>
+                            <p>
+                                {{report.RESULTS.0.Collected}}
+                            </p>
+
+                            <h5>{{report.RESULTS.0.Sub_Test.0.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.0.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.0.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.0.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.0.Sub_Test.1.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.1.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.1.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.1.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.0.Sub_Test.2.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.2.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.2.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.2.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.0.Sub_Test.3.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.3.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.3.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.0.Sub_Test.3.Reference_Range}}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.RESULTS.1.Test_Name}}</h5>
+                        <div class="text-start">
+                            <h5>Collected at</h5>
+                            <p>
+                                {{report.RESULTS.1.Collected}}
+                            </p>
+
+                            <h5>{{report.RESULTS.1.Sub_Test.0.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.0.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.0.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.0.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.1.Sub_Test.1.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.1.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.1.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.1.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.1.Sub_Test.2.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.2.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.2.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.2.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.1.Sub_Test.3.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.3.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.3.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.1.Sub_Test.3.Reference_Range}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.RESULTS.2.Test_Name}}</h5>
+                        <div class="text-start">
+                            <h5>Collected at</h5>
+                            <p>
+                                {{report.RESULTS.2.Collected}}
+                            </p>
+
+                            <h5>{{report.RESULTS.2.Sub_Test.0.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.0.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.0.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.0.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.2.Sub_Test.1.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.1.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.1.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.1.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.2.Sub_Test.2.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.2.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.2.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.2.Reference_Range}}
+                            </p>
+
+                            <hr />
+
+                            <h5>{{report.RESULTS.2.Sub_Test.3.Test}}</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.3.Values_Unit}}
+                            </p>
+                            <h5>Interpretation</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.3.Interpretation}}
+                            </p>
+                            <h5>Reference Range</h5>
+                            <p>
+                                {{report.RESULTS.2.Sub_Test.3.Reference_Range}}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button style="padding-right: 40px;" type="button" class="collapsible-btn h3 pb-3">4. ALLERGIES, ADVERSE REACTIONS,
+        ALERTS
+    </button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <div class="text-start">
+                            <p>
+                                {{report.ALLERGIES_ADVERSE_REACTIONS_ALERTS}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">5. MEDICATIONS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <div class="text-start">
+                            <p>
+                                {{report.MEDICATIONS}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">6. VITAL SIGNS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.VITAL_SIGNS.0.Date}}</h5>
+                        <div class="text-start">
+                            <h5>
+                                {{report.VITAL_SIGNS.0.Vital}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.0.Result}}
+                            </p>
+                            <p>
+                                {{report.VITAL_SIGNS.0.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.VITAL_SIGNS.1.Date}}</h5>
+                        <div class="text-start">
+                            <h5>
+                                {{report.VITAL_SIGNS.1.Vital}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.1.Result}}
+                            </p>
+                            <p>
+                                {{report.VITAL_SIGNS.1.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.VITAL_SIGNS.2.Date}}</h5>
+                        <div class="text-start">
+                            <h5>
+                                {{report.VITAL_SIGNS.2.Vital.0}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Result.0}}
+                            </p>
+
+                            <h5>
+                                {{report.VITAL_SIGNS.2.Vital.1}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Result.1}}
+                            </p>
+
+                            <h5>
+                                {{report.VITAL_SIGNS.2.Vital.2}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Result.2}}
+                            </p>
+
+                            <h5>
+                                {{report.VITAL_SIGNS.2.Vital.3}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Result.3}}
+                            </p>
+
+                            <h5>
+                                {{report.VITAL_SIGNS.2.Vital.0}}
+                            </h5>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Result.0}}
+                            </p>
+                            <p>
+                                {{report.VITAL_SIGNS.2.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">7. PROCEDURES</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PROCEDURES.0.Procedure}}</h5>
+                        <div class="text-start">
+                            <h5>Date</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Date}}
+                            </p>
+                            <h5>Notes</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Notes}}
+                            </p>
+                            <h5>Body Site</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Body_Site}}
+                            </p>
+                            <h5>Specimen</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Specimen}}
+                            </p>
+                            <h5>Indications</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Indications}}
+                            </p>
+                            <h5>Status</h5>
+                            <p>
+                                {{report.PROCEDURES.0.Status}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PROCEDURES.1.Procedure}}</h5>
+                        <div class="text-start">
+                            <h5>Date</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Date}}
+                            </p>
+                            <h5>Notes</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Notes}}
+                            </p>
+                            <h5>Body Site</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Body_Site}}
+                            </p>
+                            <h5>Specimen</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Specimen}}
+                            </p>
+                            <h5>Indications</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Indications}}
+                            </p>
+                            <h5>Status</h5>
+                            <p>
+                                {{report.PROCEDURES.1.Status}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PROCEDURES.2.Procedure}}</h5>
+                        <div class="text-start">
+                            <h5>Date</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Date}}
+                            </p>
+                            <h5>Notes</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Notes}}
+                            </p>
+                            <h5>Body Site</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Body_Site}}
+                            </p>
+                            <h5>Specimen</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Specimen}}
+                            </p>
+                            <h5>Indications</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Indications}}
+                            </p>
+                            <h5>Status</h5>
+                            <p>
+                                {{report.PROCEDURES.2.Status}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">8. SOCIAL HISTORY</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.SOCIAL_HISTORY.0.Element}}</h5>
+                        <div class="text-start">
+                            <h5>Description</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.0.Description}}
+                            </p>
+                            <h5>Date</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.0.Date}}
+                            </p>
+                            <h5>Comment</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.0.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.SOCIAL_HISTORY.1.Element}}</h5>
+                        <div class="text-start">
+                            <h5>Description</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.1.Description}}
+                            </p>
+                            <h5>Date</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.1.Date}}
+                            </p>
+                            <h5>Comment</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.1.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.SOCIAL_HISTORY.2.Element}}</h5>
+                        <div class="text-start">
+                            <h5>Description</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.2.Description}}
+                            </p>
+                            <h5>Date</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.2.Date}}
+                            </p>
+                            <h5>Comment</h5>
+                            <p>
+                                {{report.SOCIAL_HISTORY.2.Comment}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">9. ENCOUNTERS</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.ENCOUNTERS.0.Type}}</h5>
+                        <div class="text-start">
+                            <h5>CPT Code</h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.CPT_Code}}
+                            </p>
+                            <h5>Date</h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.Date}}
+                            </p>
+                            <h5>Location</h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.Location}}
+                            </p>
+                            <h5>Provider</h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.Provider}}
+                            </p>
+                            <h5>Indications</h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.Indications}}
+                            </p>
+                            <h5>
+                                Comments
+                            </h5>
+                            <p>
+                                {{report.ENCOUNTERS.0.Comments}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.ENCOUNTERS.1.Type}}</h5>
+                        <div class="text-start">
+                            <h5>CPT Code</h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.CPT_Code}}
+                            </p>
+                            <h5>Date</h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.Date}}
+                            </p>
+                            <h5>Location</h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.Location}}
+                            </p>
+                            <h5>Provider</h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.Provider}}
+                            </p>
+                            <h5>Indications</h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.Indications}}
+                            </p>
+                            <h5>
+                                Comments
+                            </h5>
+                            <p>
+                                {{report.ENCOUNTERS.1.Comments}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">10. PLAN OF CARE</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.0.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.0.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.1.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.1.Activity.0}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.1.Activity.1}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.1.Activity.2}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.1.Activity.3}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.1.Activity.4}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.2.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.2.Activity.0}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.2.Activity.1}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.3.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.3.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.4.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.4.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.5.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.5.Activity.0}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.5.Activity.1}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.5.Activity.2}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.5.Activity.3}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.6.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.6.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.7.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.7.Activity.0}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.7.Activity.1}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.8.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.8.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.9.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.9.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.10.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.10.Activity.0}}
+                            </p>
+                            <p>
+                                {{report.PLAN_OF_CARE.10.Activity.1}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{report.PLAN_OF_CARE.11.Date}}</h5>
+                        <div class="text-start">
+                            <h5>Activity(s)</h5>
+                            <p>
+                                {{report.PLAN_OF_CARE.11.Activity}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="collapsible-btn h3 pb-3">11. DOCUMENT INFORMATION</button>
+    <div class="btn-content">
+        <div class="row nft-row">
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Document Identifier</h5>
+                        <div class="text-start">
+                            <p> {{report.DOCUMENT_INFORMATION.Document_Identifier}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-xl-4">
+                <div class="card p-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Document Created</h5>
+                        <div class="text-start">
+                            <p> {{report.DOCUMENT_INFORMATION.Document_Created}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--return to top button -->
+    <div>
+        <a class="btn btn-primary float-end top-btn" href="#top">
+            Return to Top
+            <i class="fas fa-up-long"></i>
+        </a>
+    </div>
+</div>
+{% else %}
+<p class="text-center">You are not authorized to view this page.</p>
+{% endif %}
+
+<script>
+    var coll = $(".collapsible-btn");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+               // this.style.borderRadius = "10px";
+                this.style.marginBottom = "10px";
+
+            } else {
+                content.style.display = "block";
+               // this.style.borderRadius = "10px 10px 0 0";
+               // content.style.borderRadius = "0 0 10px 10px";
+               if ($("#show-more").hasClass("newDesign2")){
+                   this.style.marginBottom = "10px";
+               }
+               else{
+                this.style.marginBottom = "30px";
+               }
+
+            }
+        });
+    }
+</script>
+{% endblock content %}

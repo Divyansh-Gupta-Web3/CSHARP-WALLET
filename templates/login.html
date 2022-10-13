@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login to CSharp{% endblock title %}
+
+{% block main %}
+<script>
+  
+</script>
+<script>
+    {% for msg in messages  %}
+      alertify.set('notifier','position', 'top-left');
+      alertify.{{msg.tags}}('{{msg}}');
+    {% endfor %}
+</script>
+<br/><br/>
+
+<div class="col login-content">
+    <!-- main heading -->
+    <div class="row text-center">
+        {% if role %}
+        <div class="main-heading">Doctor Login</div>
+        {% else %}
+        <div class="main-heading">Login</div>
+        {% endif %}
+    </div>
+
+    <!-- company logo -->
+    <div class="row-sm text-center">
+        <img class="main-logo" src="../static/images/adminpanellogo.png" alt=""/>
+    </div>
+
+    <!-- spacebar -->
+    <div class="v-line mb-3"></div>
+    <div class="login-fields">
+        <form class="login-form"  action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <input class="col-6 acc-name-field" autocomplete="off" type="text" placeholder="User Name"
+                    name="accname" required></input>
+            </div>
+            <div class="row">
+                    <input type="password" autocomplete="off" name="password"  id="login-pwd"  class="col-6 acc-pwd-field disc-text" placeholder="••••••••">
+                    <span style="border:none;" class="input-group-text">
+                        <a class="login-pwd text-dark" onclick="loginPassword()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                                <path
+                                    d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                            </svg>
+                        </a>
+                    </span>
+                </input>
+            </div>
+            {% if role %}
+            <div class="row text-center w-100 login-btns">
+                <button class="mt-4 btn btn-primary btn-lg big-btn green-btn" type="submit"> VERIFY </button>
+            </div>
+            {% else %}
+            <a class="float-end  text-decor-none recover-link" href="/recover">Recover account</a>
+            <div class="row text-center w-100 login-btns">
+                <button class="mt-4 btn btn-primary btn-lg big-btn green-btn" type="submit">LOGIN </button>
+                <div class="signup-link row fixed-bottom d-inline mb-2">
+                    <span class="">Don't have an account yet?</span>
+                    <a class=" link-primary text-decor-none" onclick="getPass()">Sign Up</a>
+                </div>
+                {% endif %}
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}
+{% block style %}
+.big-btn{
+    margin-top: 15px !important;
+    width: 231px !important;
+    position: relative;
+    right: -3px;
+}
+.main-container{
+    min-height:460px !important;
+}
+body{
+    overflow: hidden;
+}
+{% endblock style %}

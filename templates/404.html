@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Oops! Page not found{% endblock title %}
+{% block main %}
+<div class="row">
+    <div style="font-size: 6rem;" class="col-sm-12 col-md-12 text-center">
+        404
+    </div>
+    <div style="font-size: 3rem;" class="col-sm-12 col-md-12 text-center"> Page not found. </div>
+    <div style="font-size: 1.8rem;" class="col-sm-12 col-md-12 text-center mt-5"> Click the button to return. </div>
+    <div class="col-sm-12 col-md-12 text-center mt-3">
+        <a href="/" class="btn btn-primary btn-lg big-btn violet-btn">Home</a>
+    </div>
+
+
+</div>
+{% endblock main %}
+
+{% block style %}
+.main-container{
+    display:block;
+}
+{% endblock style %}
